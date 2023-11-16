@@ -8,27 +8,42 @@ class Hangman:
     def __init__(self):
         pass
 
-    def replace_word_with_blank_lines(self):
+
+    def replace_word_with_blank_lines(self, word):
         replaced_word = ''
-        generated_word = self.generate_word()
+        generated_word = word
         for _ in generated_word:
             replaced_word += '_'
 
-        return [replaced_word, generated_word]
+        return replaced_word
 
-    def check_letter_guess_with_word(self):
-        user_guess = self.get_user_guess()
-        words_guess = self.replace_word_with_blank_lines()
-        replaced_word_lst = list(words_guess[1])
-        chars_to_replace = list(words_guess[0])
 
-        for idx, _ in enumerate(replaced_word_lst):
-            if user_guess in replaced_word_lst[idx]:
-                chars_to_replace[idx] = user_guess
+    def check_letter_guess_with_word(self, letter, word, blank_chars):
+        word_lst = list(word)
+        blanks_lst = list(blank_chars)
+
+        for idx, _ in enumerate(word_lst):
+            if letter in word_lst[idx]:
+                blanks_lst[idx] = letter
             else:
                 self.WRONG_GUESSES += 1
 
-        return ''.join(chars_to_replace)
+        return ''.join(list(blanks_lst))
+    
+
+    def game(self):
+        chances = 0
+        generated_word = self.generate_word()
+        blanked_word = self.replace_word_with_blank_lines(generated_word)
+        print(f"Generated word: {generated_word}")
+
+        while chances <= len(generated_word) :
+            user_guess = self.get_user_guess()
+            blanked_word = self.check_letter_guess_with_word(user_guess, generated_word, blanked_word)
+            print(blanked_word)
+            if user_guess not in blanked_word:
+                print(f"It's not the '{user_guess}'! Try again! \n {self.draw_hanged_man(chances)}")
+                chances += 1
 
     @staticmethod
     def generate_word():
@@ -38,10 +53,13 @@ class Hangman:
 
         return random.choice(words).decode('utf-8')
 
+
     @staticmethod
     def get_user_guess():
         guess = input('Guess the letter: ')
+
         return guess
+
 
     @staticmethod
     def draw_hanged_man(wrong_guesses):
@@ -142,6 +160,10 @@ class Hangman:
         return hanged_man[wrong_guesses]
 
 
-hangman = Hangman()
+if __name__ == '__main__':
+    chances = 0
+    hangman = Hangman()
 
-print(hangman.check_letter_guess_with_word())
+    hangman.game()
+    # while chances < 5:
+    #     print(hangman.check_letter_guess_with_word())
