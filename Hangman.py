@@ -61,6 +61,10 @@ class Hangman:
         response = requests.get(word_site)
         words = response.content.splitlines()
 
+        for word in words:
+            if len(word) < 4:
+                words.remove(word)
+
         return random.choice(words).decode('utf-8')
 
 
