@@ -46,12 +46,12 @@ class Hangman:
                 print(f'It\'s not the "{user_guess}"! Try again! \n {self.draw_hanged_man(self.WRONG_GUESSES)}')
                 chances += 1
                 self.WRONG_GUESSES += 1
-            elif self.WRONG_GUESSES <= 7:
+            elif self.WRONG_GUESSES == 7:
                 print(f"{self.user_name} you lost! The word was: {generated_word}")
-                chances = 7
+                break
             elif blanked_word == generated_word:
                 print(f'Congratulations {self.user_name} you guessed the word "{generated_word}" and you won!')
-                chances = 7
+                break
             else:
                 print(f"Word: {blanked_word}")
             
