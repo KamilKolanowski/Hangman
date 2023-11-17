@@ -1,7 +1,6 @@
 import requests
 import random
 
-
 class Hangman:
     WRONG_GUESSES = 0
 
@@ -41,9 +40,9 @@ class Hangman:
         while chances <= 6:
             user_guess = self.get_user_guess()
             blanked_word = self.check_letter_guess_with_word(user_guess, generated_word, blanked_word)
-
+            
             if user_guess not in blanked_word and self.WRONG_GUESSES < 6:
-                print(f'It\'s not the "{user_guess}"! Try again! \n {self.draw_hanged_man(self.WRONG_GUESSES)}')
+                print(f'It\'s not the "{user_guess}"! Try again!\n{self.draw_hanged_man(self.WRONG_GUESSES)}\n{blanked_word}')
                 chances += 1
                 self.WRONG_GUESSES += 1
             elif self.WRONG_GUESSES == 6:
