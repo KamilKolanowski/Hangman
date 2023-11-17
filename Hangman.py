@@ -38,16 +38,16 @@ class Hangman:
 
         print(f"Your word has {len(blanked_word)} characters: {blank_word_to_display}")
 
-        while chances <= 7:
+        while chances <= 6:
             user_guess = self.get_user_guess()
             blanked_word = self.check_letter_guess_with_word(user_guess, generated_word, blanked_word)
 
-            if user_guess not in blanked_word and self.WRONG_GUESSES < 7:
+            if user_guess not in blanked_word and self.WRONG_GUESSES < 6:
                 print(f'It\'s not the "{user_guess}"! Try again! \n {self.draw_hanged_man(self.WRONG_GUESSES)}')
                 chances += 1
                 self.WRONG_GUESSES += 1
-            elif self.WRONG_GUESSES == 7:
-                print(f"{self.user_name} you lost! The word was: {generated_word}")
+            elif self.WRONG_GUESSES == 6:
+                print(f"{self.draw_hanged_man(self.WRONG_GUESSES)}\n {self.user_name} you lost! The word was: {generated_word}")
                 break
             elif blanked_word == generated_word:
                 print(f'Congratulations {self.user_name} you guessed the word "{generated_word}" and you won!')
