@@ -175,5 +175,6 @@ class Hangman:
 
 
 if __name__ == '__main__':
-    hangman = Hangman('Kamil')
+    user_name = input('What\'s your name: ')
+    hangman = Hangman(user_name)
     hangman.game()
