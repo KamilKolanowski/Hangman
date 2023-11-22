@@ -2,10 +2,11 @@ import requests
 import random
 
 class Hangman:
-    WRONG_GUESSES = 0
+    
 
     def __init__(self, user_name):
         self.user_name = user_name
+        self.WRONG_GUESSES = 0
 
 
     def replace_word_with_blank_lines(self, word):
@@ -21,8 +22,8 @@ class Hangman:
         word_lst = list(word)
         blanks_lst = list(blank_chars)
 
-        for idx, _ in enumerate(word_lst):
-            if letter in word_lst[idx]:
+        for idx, char in enumerate(word_lst):
+            if letter == char:
                 blanks_lst[idx] = letter
 
         return ''.join(list(blanks_lst))
@@ -34,18 +35,18 @@ class Hangman:
         generated_word = self.generate_word()
         blanked_word = self.replace_word_with_blank_lines(generated_word)
         blank_word_to_display = ' '. join(list(blanked_word))
-
+        print(generated_word)
         print(f"Your word has {len(blanked_word)} characters: {blank_word_to_display}")
 
         while chances <= 6:
             user_guess = self.get_user_guess()
             blanked_word = self.check_letter_guess_with_word(user_guess, generated_word, blanked_word)
             
-            if user_guess not in blanked_word and self.WRONG_GUESSES < 6:
+            if user_guess not in blanked_word and self.WRONG_GUESSES <= 6:
                 print(f'It\'s not the "{user_guess}"! Try again!\n{self.draw_hanged_man(self.WRONG_GUESSES)}\n{blanked_word}')
                 chances += 1
                 self.WRONG_GUESSES += 1
-            elif self.WRONG_GUESSES == 6:
+            elif self.WRONG_GUESSES == 7:
                 print(f"{self.draw_hanged_man(self.WRONG_GUESSES)}\n {self.user_name} you lost! The word was: {generated_word}")
                 break
             elif blanked_word == generated_word:
