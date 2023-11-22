@@ -42,18 +42,21 @@ class Hangman:
             user_guess = self.get_user_guess()
             blanked_word = self.check_letter_guess_with_word(user_guess, generated_word, blanked_word)
             
-            if user_guess not in blanked_word and self.WRONG_GUESSES < 7:
-                print(f'It\'s not the "{user_guess}"! Try again!\n{self.draw_hanged_man(self.WRONG_GUESSES)}\n{blanked_word}')
-                chances += 1
-                self.WRONG_GUESSES += 1
-            elif self.WRONG_GUESSES == 7:
-                print(f"{self.draw_hanged_man(self.WRONG_GUESSES)}\n {self.user_name} you lost! The word was: {generated_word}")
-                break
-            elif blanked_word == generated_word:
-                print(f'Congratulations {self.user_name} you guessed the word "{generated_word}" and you won!')
-                break
+            if len(user_guess) != 1:
+                print('Please provide one character at a time!')
             else:
-                print(f"Word: {blanked_word}")
+                if user_guess not in blanked_word and self.WRONG_GUESSES < 7:
+                    print(f'It\'s not the "{user_guess}"! Try again!\n{self.draw_hanged_man(self.WRONG_GUESSES)}\n{blanked_word}')
+                    chances += 1
+                    self.WRONG_GUESSES += 1
+                elif self.WRONG_GUESSES == 7:
+                    print(f"{self.draw_hanged_man(self.WRONG_GUESSES)}\n {self.user_name} you lost! The word was: {generated_word}")
+                    break
+                elif blanked_word == generated_word:
+                    print(f'Congratulations {self.user_name} you guessed the word "{generated_word}" and you won!')
+                    break
+                else:
+                    print(f"Word: {blanked_word}")
             
 
     @staticmethod
